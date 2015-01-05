@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Right Click Menus</title>
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Play" />
+	<link rel="stylesheet" type="text/css" href="rightclick.css" />
+	<style>
+		body {
+			font-family:Play,Calibri,sans-serif;
+			font-size:14px;
+		}
+	</style>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="jquery.rightclick-0.1.js"></script>
+</head>
+<body>
+	Right click anywhere in the document.<br/><br/>
+	<br/>
+	<button id="click-target">Right click here!</button>
+	<script>
+		$(document).ready(function() {
+			context.config({
+				appendViewSource: true,
+				base64Lib: "libs/base64lib.js"
+			});
+			$(document).on("contextmenu",function(e) {
+				context.menu(e,{
+					"Do": function() {
+						alert("hi");
+					},
+					"Something": function() {
+						alert("no");
+					}
+				});
+			});
+			$("#click-target").on("contextmenu",function(e) {
+				e.stopPropagation();
+				e.preventDefault();
+				var menu = context.create();
+				menu = context.addItem(menu,"Item 1",function(){alert("Welcome!");});
+				context.show(menu,e.clientY,e.clientX);
+			});
+		});
+	</script>
+</body>
+</html>
